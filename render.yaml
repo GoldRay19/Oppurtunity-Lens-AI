@@ -3,7 +3,7 @@ services:
     name: opportunitylens-ai
     runtime: python
     plan: starter
-    buildCommand: "cd frontend && npm ci && npm run build && cd .. && pip install -r requirements.txt"
+    buildCommand: "cd frontend && npm install && npm run build && cd .. && pip install -r requirements.txt"
     startCommand: "uvicorn backend.main:app --host 0.0.0.0 --port $PORT"
     healthCheckPath: /api/health
     envVars:
