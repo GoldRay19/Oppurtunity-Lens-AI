@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: opportunitylens-ai
+    runtime: python
+    plan: starter
+    buildCommand: "cd frontend && npm ci && npm run build && cd .. && pip install -r requirements.txt"
+    startCommand: "uvicorn backend.main:app --host 0.0.0.0 --port $PORT"
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: APP_ENV
+        value: production
+      - key: DATABASE_URL
+        value: sqlite:////var/data/opportunitylens.db
+      - key: FIREBASE_PROJECT_ID
+        sync: false
+      - key: FIREBASE_SERVICE_ACCOUNT_JSON
+        sync: false
+      - key: ADAPTION_AI_API_KEY
+        sync: false
+      - key: ADAPTION_AI_WORKFLOWS_JSON
+        sync: false
+    disk:
+      name: opportunitylens-data
+      mountPath: /var/data
+      sizeGB: 1
